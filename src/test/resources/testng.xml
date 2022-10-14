@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite verbose="1" name="Automation Practice Test Suite">
+
+    <parameter name="suiteOwner" value="asukhodolova"/>
+    
+    <test name="Search test">
+        <classes>
+            <class name="com.solvd.automationpractice.tests.smoke.SearchTest"/>
+        </classes>
+    </test>
+
+</suite>
