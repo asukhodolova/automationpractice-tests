@@ -3,11 +3,11 @@
 
     <parameter name="suiteOwner" value="asukhodolova"/>
 
-<!--    <test name="Search test">
+    <test name="Search test">
         <classes>
             <class name="com.solvd.automationpractice.tests.smoke.SearchTest"/>
         </classes>
-    </test>-->
+    </test>
 
     <test name="Add to cart test">
         <classes>
