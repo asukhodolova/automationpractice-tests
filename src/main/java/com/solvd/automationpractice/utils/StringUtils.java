@@ -8,8 +8,4 @@ public class StringUtils {
         return value.replaceAll("[^0-9]", "");
     }
 
-    public static boolean containsIgnoreCase(String str, String value) {
-        return str.toLowerCase().contains(value.toLowerCase());
-    }
-
 }

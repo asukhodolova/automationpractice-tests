@@ -16,6 +16,10 @@ public class Header extends AbstractUIObject {
     private ExtendedWebElement searchInput;
     @FindBy(name = "submit_search")
     private ExtendedWebElement searchButton;
+    @FindBy(id = "block_top_menu")
+    private TopMenu menu;
+    @FindBy(className = "shopping_cart")
+    private ShoppingCart shoppingCart;
 
     public Header(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
@@ -30,5 +34,13 @@ public class Header extends AbstractUIObject {
         searchInput.type(searchValue);
         searchButton.click();
         return new SearchResultPage(driver);
+    }
+
+    public TopMenu getMenu() {
+        return menu;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
     }
 }

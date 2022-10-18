@@ -4,6 +4,7 @@ import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebEleme
 import com.qaprosoft.carina.core.gui.AbstractPage;
 import com.solvd.automationpractice.gui.components.Header;
 import com.solvd.automationpractice.gui.components.ProductItem;
+import com.solvd.automationpractice.gui.components.ProductList;
 import com.solvd.automationpractice.utils.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -20,8 +21,8 @@ public class SearchResultPage extends AbstractPage {
     private ExtendedWebElement searchableTextLabel;
     @FindBy(className = "heading-counter")
     private ExtendedWebElement numberOfResultsLabel;
-    @FindBy(xpath = "//ul[contains(@class,'product_list')]/li")
-    private List<ProductItem> productItems;
+    @FindBy(xpath = "//*[contains(@class,'product_list')]")
+    private ProductList productListBlock;
 
     public SearchResultPage(WebDriver driver) {
         super(driver);
@@ -41,6 +42,6 @@ public class SearchResultPage extends AbstractPage {
     }
 
     public List<ProductItem> getFoundProducts() {
-        return productItems;
+        return productListBlock.getProductItems();
     }
 }
