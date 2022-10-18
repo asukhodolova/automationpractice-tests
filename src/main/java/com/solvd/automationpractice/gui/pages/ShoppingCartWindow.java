@@ -66,11 +66,11 @@ public class ShoppingCartWindow extends AbstractPage {
         return productPriceLabel.getText();
     }
 
-    public void clickContinueShopping() {
+    public void clickContinueShoppingButton() {
         continueShoppingButton.click();
     }
 
-    public void close() {
+    public void clickCloseButton() {
         closeButton.click();
     }
 }

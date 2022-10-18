@@ -22,16 +22,14 @@ import java.util.stream.Collectors;
 
 public class AddToCartTest implements IAbstractTest {
 
-    private HomePage homePage;
-    private ShoppingCartWindow shoppingCartWindow;
-
     private int cartQuantity = 0;
     private Product firstProduct;
     private Product secondProduct;
 
     @BeforeSuite
     public void startDriver() {
-        homePage = new HomePage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
+        homePage.open();
     }
 
     @Test(description = "Add to cart and verify shopping cart window details")
@@ -39,7 +37,7 @@ public class AddToCartTest implements IAbstractTest {
     @TestPriority(Priority.P0)
     @TestLabel(name = "feature", value = {"web", "smoke"})
     public void testAddToCart() {
-        homePage.open();
+        HomePage homePage = new HomePage(getDriver());
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened");
 
         WomenPage womenPage = homePage.getHeader().getMenu().openWomenTab();
@@ -48,12 +46,11 @@ public class AddToCartTest implements IAbstractTest {
         List<ProductItem> availableProducts = womenPage.getProducts();
         Assert.assertTrue(availableProducts.size() > 0, "No products on the page");
 
-        List<String> availableProductNames =
-                availableProducts.stream().map(p -> p.getProductName()).collect(Collectors.toList());
+        List<String> availableProductNames = availableProducts.stream().map(p -> p.getProductName()).collect(Collectors.toList());
 
         firstProduct = womenPage.getProductList().findProductByName(availableProductNames.get(0)).fetchProductDetails();
 
-        shoppingCartWindow = womenPage.getProductList().findProductByName(firstProduct.getName()).addToCart();
+        womenPage.getProductList().findProductByName(firstProduct.getName()).addToCart();
         cartQuantity++;
 
         verifyShoppingCartWindowDetails(cartQuantity, firstProduct);
@@ -64,16 +61,8 @@ public class AddToCartTest implements IAbstractTest {
     @TestPriority(Priority.P0)
     @TestLabel(name = "feature", value = {"web", "smoke"})
     public void testProceedShoppingAndVerifyCartDetails() {
-        shoppingCartWindow.clickContinueShopping();
-        ShoppingCart shoppingCart = new WomenPage(getDriver()).getHeader().getShoppingCart();
-        List<Product> cartProducts =
-                shoppingCart.expandCart().getCartProducts().stream().map(p -> p.fetchProductDetails()).collect(Collectors.toList());
-
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(shoppingCart.getCartQuantity(), cartQuantity, "Cart quantity is incorrect");
-        softAssert.assertEquals(cartProducts.size(), cartQuantity, "Cart products size is incorrect");
-        softAssert.assertEquals(cartProducts.get(0), firstProduct, "Added product is incorrect");
-        softAssert.assertAll();
+        new ShoppingCartWindow(getDriver()).clickContinueShoppingButton();
+        verifyAddedToCartProducts(cartQuantity, Arrays.asList(firstProduct));
     }
 
     @Test(description = "Add to cart more products", dependsOnMethods = "testProceedShoppingAndVerifyCartDetails")
@@ -81,18 +70,17 @@ public class AddToCartTest implements IAbstractTest {
     @TestPriority(Priority.P0)
     @TestLabel(name = "feature", value = {"web", "smoke"})
     public void testAddToCartMoreProducts() {
-        WomenPage womenPage = homePage.getHeader().getMenu().openWomenTab();
+        WomenPage womenPage = new HomePage(getDriver()).getHeader().getMenu().openWomenTab();
         Assert.assertTrue(womenPage.isPageOpened(), "Women page is not opened");
 
         List<ProductItem> availableProducts = womenPage.getProducts();
         Assert.assertTrue(availableProducts.size() > 1, "Not enough products on the page");
 
-        List<String> availableProductNames =
-                availableProducts.stream().map(p -> p.getProductName()).collect(Collectors.toList());
+        List<String> availableProductNames = availableProducts.stream().map(p -> p.getProductName()).collect(Collectors.toList());
 
         secondProduct = womenPage.getProductList().findProductByName(availableProductNames.get(1)).fetchProductDetails();
 
-        shoppingCartWindow = womenPage.getProductList().findProductByName(secondProduct.getName()).addToCart();
+        womenPage.getProductList().findProductByName(secondProduct.getName()).addToCart();
         cartQuantity++;
 
         verifyShoppingCartWindowDetails(cartQuantity, secondProduct);
@@ -103,20 +91,24 @@ public class AddToCartTest implements IAbstractTest {
     @TestPriority(Priority.P0)
     @TestLabel(name = "feature", value = {"web", "smoke"})
     public void testVerifyUpdatedCartDetails() {
-        shoppingCartWindow.close();
+        new ShoppingCartWindow(getDriver()).clickCloseButton();
+        verifyAddedToCartProducts(cartQuantity, Arrays.asList(firstProduct, secondProduct));
+    }
+
+    private void verifyAddedToCartProducts(int cartQuantity, List<Product> products) {
         ShoppingCart shoppingCart = new WomenPage(getDriver()).getHeader().getShoppingCart();
-        List<Product> cartProducts =
-                shoppingCart.expandCart().getCartProducts().stream().map(p -> p.fetchProductDetails()).collect(Collectors.toList());
+        List<Product> cartProducts = shoppingCart.expandCart().getCartProducts().stream().map(p -> p.fetchProductDetails()).collect(Collectors.toList());
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(shoppingCart.getCartQuantity(), cartQuantity, "Cart quantity is incorrect");
         softAssert.assertEquals(cartProducts.size(), cartQuantity, "Cart products size is incorrect");
-        softAssert.assertEquals(cartProducts, Arrays.asList(firstProduct, secondProduct), "Products are incorrect");
+        softAssert.assertEquals(cartProducts, products, "Products are incorrect");
         softAssert.assertAll();
     }
 
     private void verifyShoppingCartWindowDetails(int cartQuantity, Product product) {
         SoftAssert softAssert = new SoftAssert();
+        ShoppingCartWindow shoppingCartWindow = new ShoppingCartWindow(getDriver());
         softAssert.assertTrue(shoppingCartWindow.isPageOpened(), "Shopping cart window is not opened");
         softAssert.assertTrue(shoppingCartWindow.isAddToCartSuccessMessagePresent(), "Success message is not present or incorrect");
         softAssert.assertTrue(shoppingCartWindow.isNumberOfItemsInCartCorrect(cartQuantity), "Incorrect number of items or message is incorrect");
