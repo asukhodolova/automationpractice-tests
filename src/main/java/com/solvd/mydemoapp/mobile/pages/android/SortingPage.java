@@ -1,23 +1,23 @@
-package com.solvd.mydemoapp.mobile.pages.ios;
+package com.solvd.mydemoapp.mobile.pages.android;
 
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
-import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import com.solvd.mydemoapp.mobile.dto.Sorting;
 import com.solvd.mydemoapp.mobile.pages.common.CatalogPageBase;
 import com.solvd.mydemoapp.mobile.pages.common.SortingPageBase;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
 
-@DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = SortingPageBase.class)
+@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = SortingPageBase.class)
 public class SortingPage extends SortingPageBase {
 
-    @ExtendedFindBy(iosPredicate = "name == 'Name - Ascending'")
+    @FindBy(xpath = "//*[contains(@resource-id,'nameAsc')]")
     private ExtendedWebElement nameAscButton;
-    @ExtendedFindBy(iosPredicate = "name == 'Name - Descending'")
+    @FindBy(xpath = "//*[contains(@resource-id,'nameDes')]")
     private ExtendedWebElement nameDescButton;
-    @ExtendedFindBy(iosPredicate = "name == 'Price - Ascending'")
+    @FindBy(xpath = "//*[contains(@resource-id,'priceAsc')]")
     private ExtendedWebElement priceAscButton;
-    @ExtendedFindBy(iosPredicate = "name == 'Price - Descending'")
+    @FindBy(xpath = "//*[contains(@resource-id,'priceDes')]")
     private ExtendedWebElement priceDescButton;
 
     public SortingPage(WebDriver driver) {
