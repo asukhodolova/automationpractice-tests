@@ -13,5 +13,7 @@ public abstract class CatalogPageBase extends AbstractPage {
 
     public abstract SortingPageBase openSortingPage();
 
-    public abstract List<Product> getProducts();
+    public abstract List<Product> getAllProductDetails();
+
+    public abstract Product fetchProductDetails(int productIndex);
 }

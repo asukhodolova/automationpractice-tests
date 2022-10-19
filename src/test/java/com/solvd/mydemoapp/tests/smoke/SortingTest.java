@@ -31,7 +31,7 @@ public class SortingTest implements IAbstractTest, IMobileUtils {
         Assert.assertTrue(catalogPageBase.isPageOpened(), "Catalog page is not opened");
 
         List<Product> actualProducts =
-                catalogPageBase.openSortingPage().selectSortingBy(sorting).getProducts();
+                catalogPageBase.openSortingPage().selectSortingBy(sorting).getAllProductDetails();
         List<Product> expectedProducts = new ArrayList<>(actualProducts);
         switch (sorting) {
             case NAME_ASC:
