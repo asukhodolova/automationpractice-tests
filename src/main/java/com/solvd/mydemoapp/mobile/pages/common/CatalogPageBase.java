@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
-public abstract class CatalogPageBase extends AbstractPage {
+public abstract class CatalogPageBase extends AbstractPage implements ICommonPage {
     public CatalogPageBase(WebDriver driver) {
         super(driver);
     }
@@ -16,4 +16,8 @@ public abstract class CatalogPageBase extends AbstractPage {
     public abstract List<Product> getAllProductDetails();
 
     public abstract Product fetchProductDetails(int productIndex);
+
+    public abstract List<String> getAllProductNames();
+
+    public abstract ProductDetailsPageBase openProductByName(String productName);
 }

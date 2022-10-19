@@ -7,7 +7,11 @@ public class Product {
     private String name;
     private String description;
     private double price;
+
+    private int quantity;
     private int rate;
+
+    private String color;
 
     public String getName() {
         return name;
@@ -41,17 +45,33 @@ public class Product {
         this.rate = rate;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Product)) return false;
         Product product = (Product) o;
-        return rate == product.rate && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(price, product.price);
+        return Double.compare(product.price, price) == 0 && quantity == product.quantity && rate == product.rate && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(color, product.color);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, price, rate);
+        return Objects.hash(name, description, price, quantity, rate, color);
     }
 
     @Override
@@ -59,8 +79,10 @@ public class Product {
         return "Product{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", price='" + price + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
                 ", rate=" + rate +
+                ", color='" + color + '\'' +
                 '}';
     }
 }

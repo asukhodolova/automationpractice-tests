@@ -25,7 +25,7 @@ public class SortingTest implements IAbstractTest, IMobileUtils {
     @Test(description = "Perform sorting and verify products list", dataProvider = "sorting")
     @MethodOwner(owner = "asukhodolova")
     @TestPriority(Priority.P0)
-    @TestLabel(name = "feature", value = {"mobile", "ios", "smoke"})
+    @TestLabel(name = "feature", value = {"mobile", "ios", "android", "smoke"})
     public void testSorting(Sorting sorting) {
         CatalogPageBase catalogPageBase = initPage(getDriver(), CatalogPageBase.class);
         Assert.assertTrue(catalogPageBase.isPageOpened(), "Catalog page is not opened");

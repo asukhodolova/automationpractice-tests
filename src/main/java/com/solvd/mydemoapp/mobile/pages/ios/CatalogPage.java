@@ -4,12 +4,16 @@ import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import com.solvd.mydemoapp.mobile.dto.Product;
+import com.solvd.mydemoapp.mobile.pages.common.CartPageBase;
 import com.solvd.mydemoapp.mobile.pages.common.CatalogPageBase;
+import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsPageBase;
 import com.solvd.mydemoapp.mobile.pages.common.SortingPageBase;
 import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = CatalogPageBase.class)
 public class CatalogPage extends CatalogPageBase {
@@ -26,6 +30,10 @@ public class CatalogPage extends CatalogPageBase {
     private List<ExtendedWebElement> productPriceLabels;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name CONTAINS 'Star'`]")
     private List<ExtendedWebElement> productStarButtons;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Cart-tab-item'`]")
+    private ExtendedWebElement cartButton;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[-1]/XCUIElementTypeStaticText")
+    private ExtendedWebElement cartAmountLabel;
 
     public CatalogPage(WebDriver driver) {
         super(driver);
@@ -54,6 +62,21 @@ public class CatalogPage extends CatalogPageBase {
         return product;
     }
 
+    @Override
+    public List<String> getAllProductNames() {
+        return productNameLabels.stream().map(p -> p.getText()).collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDetailsPageBase openProductByName(String productName) {
+        Optional<ExtendedWebElement> product = productNameLabels.stream().filter(p -> p.getText().equals(productName)).findFirst();
+        if (product.isPresent()) {
+            product.get().click();
+            return initPage(getDriver(), ProductDetailsPageBase.class);
+        }
+        throw new RuntimeException("Product " + productName + " not found");
+    }
+
     private String getProductName(int productIndex) {
         return productNameLabels.get(productIndex).getText();
     }
@@ -75,5 +98,16 @@ public class CatalogPage extends CatalogPageBase {
     @Override
     public boolean isPageOpened() {
         return title.isElementPresent();
+    }
+
+    @Override
+    public CartPageBase openCart() {
+        cartButton.click();
+        return initPage(getDriver(), CartPageBase.class);
+    }
+
+    @Override
+    public int getProductsAmountInCart() {
+        return Integer.valueOf(cartAmountLabel.getAttribute("name"));
     }
 }

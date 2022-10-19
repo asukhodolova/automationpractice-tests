@@ -3,7 +3,9 @@ package com.solvd.mydemoapp.mobile.pages.android;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.solvd.mydemoapp.mobile.dto.Product;
+import com.solvd.mydemoapp.mobile.pages.common.CartPageBase;
 import com.solvd.mydemoapp.mobile.pages.common.CatalogPageBase;
+import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsPageBase;
 import com.solvd.mydemoapp.mobile.pages.common.SortingPageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CatalogPageBase.class)
 public class CatalogPage extends CatalogPageBase {
@@ -25,6 +28,12 @@ public class CatalogPage extends CatalogPageBase {
     private ExtendedWebElement sortingButton;
     @FindBy(xpath = "//androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup")
     private List<ExtendedWebElement> productItems;
+    @FindBy(xpath = "//*[contains(@resource-id,'titleTV')]")
+    private List<ExtendedWebElement> productNameLabels;
+    @FindBy(xpath = "//*[@content-desc='View cart']")
+    private ExtendedWebElement cartButton;
+    @FindBy(xpath = "//android.widget.TextView[contains(@resource-id,'cart')]")
+    private ExtendedWebElement cartAmountLabel;
 
     public CatalogPage(WebDriver driver) {
         super(driver);
@@ -66,5 +75,32 @@ public class CatalogPage extends CatalogPageBase {
     private double getProductPrice(int productIndex) {
         return Double.valueOf(productItems.get(productIndex).findExtendedWebElement(By.xpath(PRODUCT_PRICE_LABEL_LOCATOR))
                 .getText().replace("$", "").trim());
+    }
+
+    @Override
+    public List<String> getAllProductNames() {
+        return productNameLabels.stream().map(p -> p.getText()).collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDetailsPageBase openProductByName(String productName) {
+        for (int i = 0; i < productNameLabels.size(); i++) {
+            if (productNameLabels.get(i).getText().equals(productName)) {
+                productItems.get(i).click();
+                return initPage(getDriver(), ProductDetailsPageBase.class);
+            }
+        }
+        throw new RuntimeException("Product " + productName + " not found");
+    }
+
+    @Override
+    public CartPageBase openCart() {
+        cartButton.click();
+        return initPage(getDriver(), CartPageBase.class);
+    }
+
+    @Override
+    public int getProductsAmountInCart() {
+        return Integer.parseInt(cartAmountLabel.getText());
     }
 }
