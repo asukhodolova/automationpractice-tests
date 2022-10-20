@@ -4,8 +4,8 @@ import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import com.solvd.mydemoapp.mobile.dto.Product;
-import com.solvd.mydemoapp.mobile.pages.common.CartScreenBase;
 import com.solvd.mydemoapp.mobile.pages.common.CatalogScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.INavigationMenu;
 import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsScreenBase;
 import com.solvd.mydemoapp.mobile.pages.common.SortingScreenBase;
 import org.openqa.selenium.WebDriver;
@@ -35,12 +35,6 @@ public class CatalogScreen extends CatalogScreenBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name CONTAINS 'Star'`]")
     private List<ExtendedWebElement> productStarButtons;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Cart-tab-item'`]")
-    private ExtendedWebElement cartButton;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[-1]/XCUIElementTypeStaticText")
-    private ExtendedWebElement cartAmountLabel;
 
     public CatalogScreen(WebDriver driver) {
         super(driver);
@@ -108,13 +102,7 @@ public class CatalogScreen extends CatalogScreenBase {
     }
 
     @Override
-    public CartScreenBase openCart() {
-        cartButton.click();
-        return initPage(getDriver(), CartScreenBase.class);
-    }
-
-    @Override
-    public int getProductsAmountInCart() {
-        return Integer.valueOf(cartAmountLabel.getAttribute("name"));
+    public INavigationMenu getNavigation() {
+        return new NavigationMenu(getDriver());
     }
 }

@@ -5,4 +5,6 @@ public interface INavigationMenu {
     CartScreenBase openCart();
 
     int getProductsAmountInCart();
+
+    boolean isNoCartCounter();
 }

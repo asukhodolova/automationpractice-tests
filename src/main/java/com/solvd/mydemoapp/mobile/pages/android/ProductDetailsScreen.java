@@ -4,8 +4,8 @@ import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.solvd.mydemoapp.mobile.dto.Product;
-import com.solvd.mydemoapp.mobile.pages.common.CartScreenBase;
 import com.solvd.mydemoapp.mobile.pages.common.CatalogScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.INavigationMenu;
 import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsScreenBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -14,12 +14,6 @@ import java.util.List;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductDetailsScreenBase.class)
 public class ProductDetailsScreen extends ProductDetailsScreenBase implements IMobileUtils {
-
-    @FindBy(xpath = "//android.widget.TextView[contains(@resource-id,'cart')]")
-    private ExtendedWebElement cartAmountLabel;
-
-    @FindBy(xpath = "//*[@content-desc='View cart']")
-    private ExtendedWebElement cartButton;
 
     @FindBy(xpath = "//*[contains(@resource-id,'product')]")
     private ExtendedWebElement nameLabel;
@@ -36,7 +30,7 @@ public class ProductDetailsScreen extends ProductDetailsScreenBase implements IM
     @FindBy(xpath = "//*[contains(@resource-id,'noTV')]")
     private ExtendedWebElement amountLabel;
 
-    @FindBy(xpath = "//*[contains(@resource-id,'cartBt')]")
+    @FindBy(xpath = "//*[contains(@content-desc,'add product to cart')]")
     private ExtendedWebElement addToCartButton;
 
     @FindBy(xpath = "//*[contains(@resource-id,'around')]/following-sibling::*[contains(@resource-id,'color')]")
@@ -47,17 +41,6 @@ public class ProductDetailsScreen extends ProductDetailsScreenBase implements IM
 
     public ProductDetailsScreen(WebDriver driver) {
         super(driver);
-    }
-
-    @Override
-    public CartScreenBase openCart() {
-        cartButton.click();
-        return initPage(getDriver(), CartScreenBase.class);
-    }
-
-    @Override
-    public int getProductsAmountInCart() {
-        return Integer.parseInt(cartAmountLabel.getText());
     }
 
     @Override
@@ -110,5 +93,10 @@ public class ProductDetailsScreen extends ProductDetailsScreenBase implements IM
     @Override
     public boolean isOpened() {
         return nameLabel.isElementPresent();
+    }
+
+    @Override
+    public INavigationMenu getNavigation() {
+        return new NavigationMenu(getDriver());
     }
 }
