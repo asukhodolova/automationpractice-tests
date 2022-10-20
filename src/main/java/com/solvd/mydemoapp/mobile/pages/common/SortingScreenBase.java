@@ -4,11 +4,11 @@ import com.qaprosoft.carina.core.gui.AbstractPage;
 import com.solvd.mydemoapp.mobile.dto.Sorting;
 import org.openqa.selenium.WebDriver;
 
-public abstract class SortingPageBase extends AbstractPage {
+public abstract class SortingScreenBase extends AbstractPage implements ICommonScreen {
 
-    public SortingPageBase(WebDriver driver) {
+    public SortingScreenBase(WebDriver driver) {
         super(driver);
     }
 
-    public abstract CatalogPageBase selectSortingBy(Sorting sorting);
+    public abstract CatalogScreenBase selectSortingBy(Sorting sorting);
 }

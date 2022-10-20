@@ -6,9 +6,9 @@ import com.qaprosoft.carina.core.foundation.utils.ownership.MethodOwner;
 import com.qaprosoft.carina.core.foundation.utils.tag.Priority;
 import com.qaprosoft.carina.core.foundation.utils.tag.TestPriority;
 import com.solvd.mydemoapp.mobile.dto.Product;
-import com.solvd.mydemoapp.mobile.pages.common.CartPageBase;
-import com.solvd.mydemoapp.mobile.pages.common.CatalogPageBase;
-import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsPageBase;
+import com.solvd.mydemoapp.mobile.pages.common.CartScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.CatalogScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsScreenBase;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -27,21 +27,21 @@ public class ActionsWithCartTest implements IAbstractTest, IMobileUtils {
     @TestPriority(Priority.P0)
     @TestLabel(name = "feature", value = {"mobile", "ios", "android", "smoke"})
     public void testAddToCartAndVerifyCounter() {
-        CatalogPageBase catalogPageBase = initPage(getDriver(), CatalogPageBase.class);
-        Assert.assertTrue(catalogPageBase.isPageOpened(), "Catalog page is not opened");
+        CatalogScreenBase catalogScreenBase = initPage(getDriver(), CatalogScreenBase.class);
+        Assert.assertTrue(catalogScreenBase.isOpened(), "Catalog page is not opened");
 
-        List<String> products = catalogPageBase.getAllProductNames();
+        List<String> products = catalogScreenBase.getAllProductNames();
 
         firstProduct = openProductByNameAndGetDetails(products.get(0));
-        Assert.assertEquals(initPage(getDriver(), ProductDetailsPageBase.class).clickAddToCartButton().getProductsAmountInCart(),
+        Assert.assertEquals(initPage(getDriver(), ProductDetailsScreenBase.class).clickAddToCartButton().getProductsAmountInCart(),
                 firstProduct.getQuantity(), "Incorrect amount of products in the cart");
 
-        catalogPageBase = initPage(getDriver(), ProductDetailsPageBase.class).clickBackButton();
-        Assert.assertTrue(catalogPageBase.isPageOpened(), "Catalog page is not opened");
+        catalogScreenBase = initPage(getDriver(), ProductDetailsScreenBase.class).clickBackButton();
+        Assert.assertTrue(catalogScreenBase.isOpened(), "Catalog page is not opened");
 
         secondProduct = openProductByNameAndGetDetails(products.get(3));
 
-        Assert.assertEquals(initPage(getDriver(), ProductDetailsPageBase.class).clickAddToCartButton().getProductsAmountInCart(),
+        Assert.assertEquals(initPage(getDriver(), ProductDetailsScreenBase.class).clickAddToCartButton().getProductsAmountInCart(),
                 firstProduct.getQuantity() + secondProduct.getQuantity(),
                 "Incorrect amount of products in the cart");
     }
@@ -51,21 +51,21 @@ public class ActionsWithCartTest implements IAbstractTest, IMobileUtils {
     @TestPriority(Priority.P0)
     @TestLabel(name = "feature", value = {"mobile", "ios", "android", "smoke"})
     public void testVerifyCartDetails() {
-        CartPageBase cartPageBase = initPage(getDriver(), ProductDetailsPageBase.class).openCart();
-        Assert.assertTrue(cartPageBase.isPageOpened(), "Cart page is not opened");
+        CartScreenBase cartScreenBase = initPage(getDriver(), ProductDetailsScreenBase.class).openCart();
+        Assert.assertTrue(cartScreenBase.isOpened(), "Cart page is not opened");
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(cartPageBase.getAddedProductNames(),
+        softAssert.assertEquals(cartScreenBase.getAddedProductNames(),
                 Arrays.asList(firstProduct.getName(), secondProduct.getName()), "Added products are incorrect");
-        softAssert.assertEquals(cartPageBase.getTotalQuantity(),
+        softAssert.assertEquals(cartScreenBase.getTotalQuantity(),
                 firstProduct.getQuantity() + secondProduct.getQuantity(), "Total quantity is incorrect");
-        softAssert.assertEquals(cartPageBase.getTotalPrice(),
+        softAssert.assertEquals(cartScreenBase.getTotalPrice(),
                 firstProduct.getPrice() + secondProduct.getPrice(), "Total price is incorrect");
         softAssert.assertAll();
     }
 
     private Product openProductByNameAndGetDetails(String productToOpen) {
-        ProductDetailsPageBase productDetailsPageBase = initPage(getDriver(), CatalogPageBase.class).openProductByName(productToOpen);
+        ProductDetailsScreenBase productDetailsPageBase = initPage(getDriver(), CatalogScreenBase.class).openProductByName(productToOpen);
         Assert.assertTrue(productDetailsPageBase.isProductOpened(productToOpen), "Product " + productToOpen + " is not opened");
 
         return productDetailsPageBase.fetchProductDetails();

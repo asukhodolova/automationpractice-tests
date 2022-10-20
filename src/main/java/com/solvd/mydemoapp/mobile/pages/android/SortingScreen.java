@@ -3,29 +3,32 @@ package com.solvd.mydemoapp.mobile.pages.android;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.solvd.mydemoapp.mobile.dto.Sorting;
-import com.solvd.mydemoapp.mobile.pages.common.CatalogPageBase;
-import com.solvd.mydemoapp.mobile.pages.common.SortingPageBase;
+import com.solvd.mydemoapp.mobile.pages.common.CatalogScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.SortingScreenBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = SortingPageBase.class)
-public class SortingPage extends SortingPageBase {
+@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = SortingScreenBase.class)
+public class SortingScreen extends SortingScreenBase {
 
     @FindBy(xpath = "//*[contains(@resource-id,'nameAsc')]")
     private ExtendedWebElement nameAscButton;
+
     @FindBy(xpath = "//*[contains(@resource-id,'nameDes')]")
     private ExtendedWebElement nameDescButton;
+
     @FindBy(xpath = "//*[contains(@resource-id,'priceAsc')]")
     private ExtendedWebElement priceAscButton;
+
     @FindBy(xpath = "//*[contains(@resource-id,'priceDes')]")
     private ExtendedWebElement priceDescButton;
 
-    public SortingPage(WebDriver driver) {
+    public SortingScreen(WebDriver driver) {
         super(driver);
     }
 
     @Override
-    public CatalogPageBase selectSortingBy(Sorting sorting) {
+    public CatalogScreenBase selectSortingBy(Sorting sorting) {
         switch (sorting) {
             case NAME_ASC:
                 nameAscButton.click();
@@ -42,6 +45,11 @@ public class SortingPage extends SortingPageBase {
             default:
                 throw new RuntimeException("Unknown sorting type " + sorting);
         }
-        return initPage(getDriver(), CatalogPageBase.class);
+        return initPage(getDriver(), CatalogScreenBase.class);
+    }
+
+    @Override
+    public boolean isOpened() {
+        return nameAscButton.isElementPresent();
     }
 }

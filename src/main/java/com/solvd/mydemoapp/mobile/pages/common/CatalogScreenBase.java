@@ -6,12 +6,13 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
-public abstract class CatalogPageBase extends AbstractPage implements ICommonPage {
-    public CatalogPageBase(WebDriver driver) {
+public abstract class CatalogScreenBase extends AbstractPage implements ICommonScreen, INavigationMenu {
+
+    public CatalogScreenBase(WebDriver driver) {
         super(driver);
     }
 
-    public abstract SortingPageBase openSortingPage();
+    public abstract SortingScreenBase openSortingPage();
 
     public abstract List<Product> getAllProductDetails();
 
@@ -19,5 +20,5 @@ public abstract class CatalogPageBase extends AbstractPage implements ICommonPag
 
     public abstract List<String> getAllProductNames();
 
-    public abstract ProductDetailsPageBase openProductByName(String productName);
+    public abstract ProductDetailsScreenBase openProductByName(String productName);
 }

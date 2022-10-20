@@ -8,7 +8,7 @@ import com.qaprosoft.carina.core.foundation.utils.tag.TestPriority;
 import com.solvd.automationpractice.utils.DataUtils;
 import com.solvd.mydemoapp.mobile.dto.Product;
 import com.solvd.mydemoapp.mobile.dto.Sorting;
-import com.solvd.mydemoapp.mobile.pages.common.CatalogPageBase;
+import com.solvd.mydemoapp.mobile.pages.common.CatalogScreenBase;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -27,11 +27,11 @@ public class SortingTest implements IAbstractTest, IMobileUtils {
     @TestPriority(Priority.P0)
     @TestLabel(name = "feature", value = {"mobile", "ios", "android", "smoke"})
     public void testSorting(Sorting sorting) {
-        CatalogPageBase catalogPageBase = initPage(getDriver(), CatalogPageBase.class);
-        Assert.assertTrue(catalogPageBase.isPageOpened(), "Catalog page is not opened");
+        CatalogScreenBase catalogScreenBase = initPage(getDriver(), CatalogScreenBase.class);
+        Assert.assertTrue(catalogScreenBase.isOpened(), "Catalog page is not opened");
 
         List<Product> actualProducts =
-                catalogPageBase.openSortingPage().selectSortingBy(sorting).getAllProductDetails();
+                catalogScreenBase.openSortingPage().selectSortingBy(sorting).getAllProductDetails();
         List<Product> expectedProducts = new ArrayList<>(actualProducts);
         switch (sorting) {
             case NAME_ASC:

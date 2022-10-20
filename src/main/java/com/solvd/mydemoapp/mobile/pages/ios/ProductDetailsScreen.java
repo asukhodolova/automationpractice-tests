@@ -4,42 +4,53 @@ import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import com.solvd.mydemoapp.mobile.dto.Product;
-import com.solvd.mydemoapp.mobile.pages.common.CartPageBase;
-import com.solvd.mydemoapp.mobile.pages.common.CatalogPageBase;
-import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsPageBase;
+import com.solvd.mydemoapp.mobile.pages.common.CartScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.CatalogScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsScreenBase;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
-@DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = ProductDetailsPageBase.class)
-public class ProductDetailsPage extends ProductDetailsPageBase {
+@DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = ProductDetailsScreenBase.class)
+public class ProductDetailsScreen extends ProductDetailsScreenBase {
 
     @ExtendedFindBy(iosPredicate = "name == 'ProductDetails-screen'")
     private ExtendedWebElement title;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'ProductDetails-screen'`]/**/XCUIElementTypeButton")
     private ExtendedWebElement productsButton;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView/**/XCUIElementTypeStaticText")
     private ExtendedWebElement nameLabel;
+
     @ExtendedFindBy(iosPredicate = "name == 'Price' AND type == 'XCUIElementTypeStaticText'")
     private ExtendedWebElement priceLabel;
+
     @ExtendedFindBy(iosPredicate = "name == 'SubtractMinus Icons' AND type == 'XCUIElementTypeButton'")
     private ExtendedWebElement minusQuantityButton;
+
     @ExtendedFindBy(iosPredicate = "name == 'AddPlus Icons' AND type == 'XCUIname == 'ProductsElementTypeButton'")
     private ExtendedWebElement plusQuantityButton;
+
     @ExtendedFindBy(iosPredicate = "name == 'Amount'")
     private ExtendedWebElement amountLabel;
+
     @ExtendedFindBy(iosPredicate = "name == 'Add To Cart'")
     private ExtendedWebElement addToCartButton;
+
     @ExtendedFindBy(iosPredicate = "name CONTAINS 'Color' AND value == '1'")
     private ExtendedWebElement selectedColor;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name CONTAINS 'Star'`]")
     private List<ExtendedWebElement> starButtons;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Cart-tab-item'`]")
     private ExtendedWebElement cartButton;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[-1]/XCUIElementTypeStaticText")
     private ExtendedWebElement cartAmountLabel;
 
-    public ProductDetailsPage(WebDriver driver) {
+    public ProductDetailsScreen(WebDriver driver) {
         super(driver);
     }
 
@@ -60,15 +71,15 @@ public class ProductDetailsPage extends ProductDetailsPageBase {
     }
 
     @Override
-    public ProductDetailsPageBase clickAddToCartButton() {
+    public ProductDetailsScreenBase clickAddToCartButton() {
         addToCartButton.click();
-        return initPage(getDriver(), ProductDetailsPageBase.class);
+        return initPage(getDriver(), ProductDetailsScreenBase.class);
     }
 
     @Override
-    public CatalogPageBase clickBackButton() {
+    public CatalogScreenBase clickBackButton() {
         productsButton.click();
-        return initPage(getDriver(), CatalogPageBase.class);
+        return initPage(getDriver(), CatalogScreenBase.class);
     }
 
     private int getRate() {
@@ -90,14 +101,14 @@ public class ProductDetailsPage extends ProductDetailsPageBase {
     }
 
     @Override
-    public boolean isPageOpened() {
+    public boolean isOpened() {
         return title.isElementPresent();
     }
 
     @Override
-    public CartPageBase openCart() {
+    public CartScreenBase openCart() {
         cartButton.click();
-        return initPage(getDriver(), CartPageBase.class);
+        return initPage(getDriver(), CartScreenBase.class);
     }
 
     @Override

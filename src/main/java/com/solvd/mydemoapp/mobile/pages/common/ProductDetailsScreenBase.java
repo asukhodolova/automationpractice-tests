@@ -4,9 +4,9 @@ import com.qaprosoft.carina.core.gui.AbstractPage;
 import com.solvd.mydemoapp.mobile.dto.Product;
 import org.openqa.selenium.WebDriver;
 
-public abstract class ProductDetailsPageBase extends AbstractPage implements ICommonPage {
+public abstract class ProductDetailsScreenBase extends AbstractPage implements ICommonScreen, INavigationMenu {
 
-    public ProductDetailsPageBase(WebDriver driver) {
+    public ProductDetailsScreenBase(WebDriver driver) {
         super(driver);
     }
 
@@ -14,8 +14,8 @@ public abstract class ProductDetailsPageBase extends AbstractPage implements ICo
 
     public abstract Product fetchProductDetails();
 
-    public abstract ProductDetailsPageBase clickAddToCartButton();
+    public abstract ProductDetailsScreenBase clickAddToCartButton();
 
-    public abstract CatalogPageBase clickBackButton();
+    public abstract CatalogScreenBase clickBackButton();
 
 }

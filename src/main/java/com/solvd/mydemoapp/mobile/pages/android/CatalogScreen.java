@@ -3,11 +3,10 @@ package com.solvd.mydemoapp.mobile.pages.android;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.solvd.mydemoapp.mobile.dto.Product;
-import com.solvd.mydemoapp.mobile.pages.common.CartPageBase;
-import com.solvd.mydemoapp.mobile.pages.common.CatalogPageBase;
-import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsPageBase;
-import com.solvd.mydemoapp.mobile.pages.common.SortingPageBase;
-import org.openqa.selenium.By;
+import com.solvd.mydemoapp.mobile.pages.common.CartScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.CatalogScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.SortingScreenBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -15,34 +14,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CatalogPageBase.class)
-public class CatalogPage extends CatalogPageBase {
-
-    private static final String PRODUCT_NAME_LABEL_LOCATOR = ".//*[contains(@resource-id,'title')]";
-    private static final String PRODUCT_PRICE_LABEL_LOCATOR = ".//*[contains(@resource-id,'price')]";
-    private static final String PRODUCT_STAR_BUTTON_LOCATOR = ".//*[contains(@resource-id,'ratting')]//*[contains(@resource-id,'start')]";
+@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CatalogScreenBase.class)
+public class CatalogScreen extends CatalogScreenBase {
 
     @FindBy(xpath = "//*[contains(@resource-id,'mTvTitle')]")
     private ExtendedWebElement title;
+
     @FindBy(xpath = "//*[contains(@resource-id,'sort')]")
     private ExtendedWebElement sortingButton;
+
     @FindBy(xpath = "//androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup")
     private List<ExtendedWebElement> productItems;
-    @FindBy(xpath = "//*[contains(@resource-id,'titleTV')]")
+
+    @FindBy(xpath = "//*[contains(@resource-id,'title')]")
     private List<ExtendedWebElement> productNameLabels;
+
+    @FindBy(xpath = "//*[contains(@resource-id,'price')]")
+    private List<ExtendedWebElement> productPriceLabels;
+
     @FindBy(xpath = "//*[@content-desc='View cart']")
     private ExtendedWebElement cartButton;
+
     @FindBy(xpath = "//android.widget.TextView[contains(@resource-id,'cart')]")
     private ExtendedWebElement cartAmountLabel;
 
-    public CatalogPage(WebDriver driver) {
+    public CatalogScreen(WebDriver driver) {
         super(driver);
     }
 
     @Override
-    public SortingPageBase openSortingPage() {
+    public SortingScreenBase openSortingPage() {
         sortingButton.click();
-        return initPage(getDriver(), SortingPageBase.class);
+        return initPage(getDriver(), SortingScreenBase.class);
     }
 
     @Override
@@ -56,11 +59,6 @@ public class CatalogPage extends CatalogPageBase {
     }
 
     @Override
-    public boolean isPageOpened() {
-        return title.isElementPresent();
-    }
-
-    @Override
     public Product fetchProductDetails(int productIndex) {
         Product product = new Product();
         product.setName(getProductName(productIndex));
@@ -69,12 +67,11 @@ public class CatalogPage extends CatalogPageBase {
     }
 
     private String getProductName(int productIndex) {
-        return productItems.get(productIndex).findExtendedWebElement(By.xpath(PRODUCT_NAME_LABEL_LOCATOR)).getText();
+        return productNameLabels.get(productIndex).getText();
     }
 
     private double getProductPrice(int productIndex) {
-        return Double.valueOf(productItems.get(productIndex).findExtendedWebElement(By.xpath(PRODUCT_PRICE_LABEL_LOCATOR))
-                .getText().replace("$", "").trim());
+        return Double.valueOf(productPriceLabels.get(productIndex).getText().replace("$", "").trim());
     }
 
     @Override
@@ -83,24 +80,29 @@ public class CatalogPage extends CatalogPageBase {
     }
 
     @Override
-    public ProductDetailsPageBase openProductByName(String productName) {
+    public ProductDetailsScreenBase openProductByName(String productName) {
         for (int i = 0; i < productNameLabels.size(); i++) {
             if (productNameLabels.get(i).getText().equals(productName)) {
                 productItems.get(i).click();
-                return initPage(getDriver(), ProductDetailsPageBase.class);
+                return initPage(getDriver(), ProductDetailsScreenBase.class);
             }
         }
         throw new RuntimeException("Product " + productName + " not found");
     }
 
     @Override
-    public CartPageBase openCart() {
+    public CartScreenBase openCart() {
         cartButton.click();
-        return initPage(getDriver(), CartPageBase.class);
+        return initPage(getDriver(), CartScreenBase.class);
     }
 
     @Override
     public int getProductsAmountInCart() {
         return Integer.parseInt(cartAmountLabel.getText());
+    }
+
+    @Override
+    public boolean isOpened() {
+        return title.isElementPresent();
     }
 }
