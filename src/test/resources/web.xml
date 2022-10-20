@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="Automation Practice Test Suite">
+<suite verbose="1" name="Automation Practice Web Test Suite">
 
     <parameter name="suiteOwner" value="asukhodolova"/>
 
