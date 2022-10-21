@@ -6,7 +6,7 @@ import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import com.solvd.automationpractice.utils.StringUtils;
 import com.solvd.mydemoapp.mobile.pages.common.CartScreenBase;
 import com.solvd.mydemoapp.mobile.pages.common.CatalogScreenBase;
-import com.solvd.mydemoapp.mobile.pages.common.INavigationMenu;
+import com.solvd.mydemoapp.mobile.pages.common.NavigationMenuBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -85,7 +85,7 @@ public class CartScreen extends CartScreenBase {
         for (int i = 0; i < count; i++) {
             plusQuantityButtons.get(productIndex).click();
         }
-        return initPage(getDriver(), CartScreenBase.class);
+        return initPage(CartScreenBase.class);
     }
 
     @Override
@@ -94,13 +94,13 @@ public class CartScreen extends CartScreenBase {
         for (int i = 0; i < count; i++) {
             minusQuantityButtons.get(productIndex).click();
         }
-        return initPage(getDriver(), CartScreenBase.class);
+        return initPage(CartScreenBase.class);
     }
 
     @Override
     public CartScreenBase removeProduct(String productName) {
         removeItemButtons.get(getProductIndexByName(productName)).click();
-        return initPage(getDriver(), CartScreenBase.class);
+        return initPage(CartScreenBase.class);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class CartScreen extends CartScreenBase {
     @Override
     public CatalogScreenBase clickGoShoppingButton() {
         goShoppingButton.click();
-        return initPage(getDriver(), CatalogScreenBase.class);
+        return initPage(CatalogScreenBase.class);
     }
 
     private int getProductIndexByName(String productName) {
@@ -130,7 +130,7 @@ public class CartScreen extends CartScreenBase {
     }
 
     @Override
-    public INavigationMenu getNavigation() {
-        return new NavigationMenu(getDriver());
+    public NavigationMenuBase getNavigation() {
+        return initPage(NavigationMenuBase.class);
     }
 }

@@ -5,7 +5,7 @@ import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebEleme
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import com.solvd.mydemoapp.mobile.dto.Product;
 import com.solvd.mydemoapp.mobile.pages.common.CatalogScreenBase;
-import com.solvd.mydemoapp.mobile.pages.common.INavigationMenu;
+import com.solvd.mydemoapp.mobile.pages.common.NavigationMenuBase;
 import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsScreenBase;
 import org.openqa.selenium.WebDriver;
 
@@ -67,13 +67,13 @@ public class ProductDetailsScreen extends ProductDetailsScreenBase {
     @Override
     public ProductDetailsScreenBase clickAddToCartButton() {
         addToCartButton.click();
-        return initPage(getDriver(), ProductDetailsScreenBase.class);
+        return initPage(ProductDetailsScreenBase.class);
     }
 
     @Override
     public CatalogScreenBase clickBackButton() {
         productsButton.click();
-        return initPage(getDriver(), CatalogScreenBase.class);
+        return initPage(CatalogScreenBase.class);
     }
 
     private int getRate() {
@@ -100,7 +100,7 @@ public class ProductDetailsScreen extends ProductDetailsScreenBase {
     }
 
     @Override
-    public INavigationMenu getNavigation() {
-        return new NavigationMenu(getDriver());
+    public NavigationMenuBase getNavigation() {
+        return initPage(NavigationMenuBase.class);
     }
 }

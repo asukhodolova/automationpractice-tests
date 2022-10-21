@@ -1,14 +1,15 @@
 package com.solvd.mydemoapp.mobile.pages.android;
 
+import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.DriverHelper;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
-import com.qaprosoft.carina.core.gui.AbstractPage;
 import com.solvd.mydemoapp.mobile.pages.common.CartScreenBase;
-import com.solvd.mydemoapp.mobile.pages.common.INavigationMenu;
+import com.solvd.mydemoapp.mobile.pages.common.NavigationMenuBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-public class NavigationMenu extends AbstractPage implements INavigationMenu {
+@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = NavigationMenuBase.class)
+public class NavigationMenu extends NavigationMenuBase {
 
     @FindBy(xpath = "//*[@content-desc='View cart']")
     private ExtendedWebElement cartButton;
@@ -23,7 +24,7 @@ public class NavigationMenu extends AbstractPage implements INavigationMenu {
     @Override
     public CartScreenBase openCart() {
         cartButton.click();
-        return initPage(getDriver(), CartScreenBase.class);
+        return initPage(CartScreenBase.class);
     }
 
     @Override

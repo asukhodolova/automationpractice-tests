@@ -46,7 +46,7 @@ public class SortingScreen extends SortingScreenBase {
             default:
                 throw new RuntimeException("Unknown sorting type " + sorting);
         }
-        return initPage(getDriver(), CatalogScreenBase.class);
+        return initPage(CatalogScreenBase.class);
     }
 
     @Override

@@ -8,7 +8,7 @@ public interface ICommonScreen {
         throw new NotImplementedException("Method is not implemented for " + this.getClass());
     }
 
-    default INavigationMenu getNavigation() {
+    default NavigationMenuBase getNavigation() {
         throw new NotImplementedException("Method is not implemented for " + this.getClass());
     }
 }

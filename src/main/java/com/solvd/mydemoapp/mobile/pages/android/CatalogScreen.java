@@ -4,7 +4,7 @@ import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.solvd.mydemoapp.mobile.dto.Product;
 import com.solvd.mydemoapp.mobile.pages.common.CatalogScreenBase;
-import com.solvd.mydemoapp.mobile.pages.common.INavigationMenu;
+import com.solvd.mydemoapp.mobile.pages.common.NavigationMenuBase;
 import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsScreenBase;
 import com.solvd.mydemoapp.mobile.pages.common.SortingScreenBase;
 import org.openqa.selenium.WebDriver;
@@ -39,7 +39,7 @@ public class CatalogScreen extends CatalogScreenBase {
     @Override
     public SortingScreenBase openSortingPage() {
         sortingButton.click();
-        return initPage(getDriver(), SortingScreenBase.class);
+        return initPage(SortingScreenBase.class);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class CatalogScreen extends CatalogScreenBase {
         for (int i = 0; i < productNameLabels.size(); i++) {
             if (productNameLabels.get(i).getText().equals(productName)) {
                 productItems.get(i).click();
-                return initPage(getDriver(), ProductDetailsScreenBase.class);
+                return initPage(ProductDetailsScreenBase.class);
             }
         }
         throw new RuntimeException("Product " + productName + " not found");
@@ -90,7 +90,7 @@ public class CatalogScreen extends CatalogScreenBase {
     }
 
     @Override
-    public INavigationMenu getNavigation() {
-        return new NavigationMenu(getDriver());
+    public NavigationMenuBase getNavigation() {
+        return initPage(NavigationMenuBase.class);
     }
 }
