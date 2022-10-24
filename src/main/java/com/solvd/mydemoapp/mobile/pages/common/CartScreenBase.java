@@ -1,11 +1,10 @@
 package com.solvd.mydemoapp.mobile.pages.common;
 
-import com.qaprosoft.carina.core.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
-public abstract class CartScreenBase extends AbstractPage implements ICommonScreen {
+public abstract class CartScreenBase extends AbstractScreenBase {
 
     public CartScreenBase(WebDriver driver) {
         super(driver);

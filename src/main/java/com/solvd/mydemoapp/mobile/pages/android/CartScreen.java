@@ -112,7 +112,7 @@ public class CartScreen extends CartScreenBase {
 
     @Override
     public boolean isOpened() {
-        return proceedToCheckoutButton.isElementPresent();
+        return proceedToCheckoutButton.isElementPresent() || goShoppingButton.isElementPresent();
     }
 
     @Override

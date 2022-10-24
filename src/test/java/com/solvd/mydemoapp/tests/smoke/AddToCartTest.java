@@ -1,7 +1,6 @@
 package com.solvd.mydemoapp.tests.smoke;
 
 import com.qaprosoft.carina.core.foundation.IAbstractTest;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
 import com.qaprosoft.carina.core.foundation.utils.ownership.MethodOwner;
 import com.qaprosoft.carina.core.foundation.utils.tag.Priority;
 import com.qaprosoft.carina.core.foundation.utils.tag.TestPriority;
@@ -17,7 +16,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.Arrays;
 import java.util.List;
 
-public class AddToCartTest implements IAbstractTest, IMobileUtils {
+public class AddToCartTest implements IAbstractTest {
 
     private Product firstProduct;
     private Product secondProduct;
@@ -25,7 +24,7 @@ public class AddToCartTest implements IAbstractTest, IMobileUtils {
     @Test(description = "Add products to cart and verify cart counter")
     @MethodOwner(owner = "asukhodolova")
     @TestPriority(Priority.P0)
-    @TestLabel(name = "feature", value = {"mobile", "ios", "android", "smoke"})
+    @TestLabel(name = "feature", value = {"mobile", "images", "android", "smoke"})
     public void testAddToCartAndVerifyCounter() {
         CatalogScreenBase catalogScreenBase = initPage(getDriver(), CatalogScreenBase.class);
         Assert.assertTrue(catalogScreenBase.isOpened(), "Catalog page is not opened");
@@ -49,7 +48,7 @@ public class AddToCartTest implements IAbstractTest, IMobileUtils {
     @Test(description = "Verify cart with product details, total price and quantity", dependsOnMethods = "testAddToCartAndVerifyCounter")
     @MethodOwner(owner = "asukhodolova")
     @TestPriority(Priority.P0)
-    @TestLabel(name = "feature", value = {"mobile", "ios", "android", "smoke"})
+    @TestLabel(name = "feature", value = {"mobile", "images", "android", "smoke"})
     public void testVerifyCartDetails() {
         CartScreenBase cartScreenBase = initPage(getDriver(), ProductDetailsScreenBase.class).getNavigation().openCart();
         Assert.assertTrue(cartScreenBase.isOpened(), "Cart page is not opened");

@@ -21,4 +21,10 @@
         </classes>
     </test>
 
+    <test name="Find by image locator test">
+        <classes>
+            <class name="com.solvd.mydemoapp.tests.smoke.ImageLocatorTest"/>
+        </classes>
+    </test>
+
 </suite>

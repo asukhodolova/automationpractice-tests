@@ -2,11 +2,9 @@ package com.solvd.mydemoapp.mobile.pages.android;
 
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import com.solvd.mydemoapp.mobile.dto.Product;
-import com.solvd.mydemoapp.mobile.pages.common.CatalogScreenBase;
-import com.solvd.mydemoapp.mobile.pages.common.NavigationMenuBase;
-import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsScreenBase;
-import com.solvd.mydemoapp.mobile.pages.common.SortingScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -31,6 +29,9 @@ public class CatalogScreen extends CatalogScreenBase {
 
     @FindBy(xpath = "//*[contains(@resource-id,'price')]")
     private List<ExtendedWebElement> productPriceLabels;
+
+    @ExtendedFindBy(image = "images/android/cart.png")
+    private ExtendedWebElement cartByImageButton;
 
     public CatalogScreen(WebDriver driver) {
         super(driver);
@@ -82,6 +83,12 @@ public class CatalogScreen extends CatalogScreenBase {
             }
         }
         throw new RuntimeException("Product " + productName + " not found");
+    }
+
+    @Override
+    public CartScreenBase clickOnCartByImage() {
+        cartByImageButton.click();
+        return initPage(CartScreenBase.class);
     }
 
     @Override
