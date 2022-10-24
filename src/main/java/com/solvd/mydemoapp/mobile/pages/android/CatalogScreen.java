@@ -3,8 +3,8 @@ package com.solvd.mydemoapp.mobile.pages.android;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.solvd.mydemoapp.mobile.dto.Product;
-import com.solvd.mydemoapp.mobile.pages.common.CartScreenBase;
 import com.solvd.mydemoapp.mobile.pages.common.CatalogScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.NavigationMenuBase;
 import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsScreenBase;
 import com.solvd.mydemoapp.mobile.pages.common.SortingScreenBase;
 import org.openqa.selenium.WebDriver;
@@ -32,12 +32,6 @@ public class CatalogScreen extends CatalogScreenBase {
     @FindBy(xpath = "//*[contains(@resource-id,'price')]")
     private List<ExtendedWebElement> productPriceLabels;
 
-    @FindBy(xpath = "//*[@content-desc='View cart']")
-    private ExtendedWebElement cartButton;
-
-    @FindBy(xpath = "//android.widget.TextView[contains(@resource-id,'cart')]")
-    private ExtendedWebElement cartAmountLabel;
-
     public CatalogScreen(WebDriver driver) {
         super(driver);
     }
@@ -45,7 +39,7 @@ public class CatalogScreen extends CatalogScreenBase {
     @Override
     public SortingScreenBase openSortingPage() {
         sortingButton.click();
-        return initPage(getDriver(), SortingScreenBase.class);
+        return initPage(SortingScreenBase.class);
     }
 
     @Override
@@ -84,25 +78,19 @@ public class CatalogScreen extends CatalogScreenBase {
         for (int i = 0; i < productNameLabels.size(); i++) {
             if (productNameLabels.get(i).getText().equals(productName)) {
                 productItems.get(i).click();
-                return initPage(getDriver(), ProductDetailsScreenBase.class);
+                return initPage(ProductDetailsScreenBase.class);
             }
         }
         throw new RuntimeException("Product " + productName + " not found");
     }
 
     @Override
-    public CartScreenBase openCart() {
-        cartButton.click();
-        return initPage(getDriver(), CartScreenBase.class);
-    }
-
-    @Override
-    public int getProductsAmountInCart() {
-        return Integer.parseInt(cartAmountLabel.getText());
-    }
-
-    @Override
     public boolean isOpened() {
         return title.isElementPresent();
+    }
+
+    @Override
+    public NavigationMenuBase getNavigation() {
+        return initPage(NavigationMenuBase.class);
     }
 }

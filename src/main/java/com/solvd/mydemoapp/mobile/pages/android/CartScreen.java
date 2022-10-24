@@ -4,6 +4,8 @@ import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.solvd.automationpractice.utils.StringUtils;
 import com.solvd.mydemoapp.mobile.pages.common.CartScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.CatalogScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.NavigationMenuBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -20,10 +22,10 @@ public class CartScreen extends CartScreenBase {
     private List<ExtendedWebElement> productItems;
 
     @FindBy(xpath = "//*[contains(@resource-id,'minus')]")
-    private List<ExtendedWebElement> minusQuantityButton;
+    private List<ExtendedWebElement> minusQuantityButtons;
 
     @FindBy(xpath = "//*[contains(@resource-id,'plus')]")
-    private List<ExtendedWebElement> plusQuantityButton;
+    private List<ExtendedWebElement> plusQuantityButtons;
 
     @FindBy(xpath = "//*[contains(@resource-id,'title')]")
     private List<ExtendedWebElement> productNameLabels;
@@ -31,7 +33,10 @@ public class CartScreen extends CartScreenBase {
     @FindBy(xpath = "//*[contains(@resource-id,'price')]")
     private List<ExtendedWebElement> productPriceLabels;
 
-    @FindBy(xpath = "//*[contains(@resource-id,'cartBt')]")
+    @FindBy(xpath = "//*[contains(@resource-id,'remove')]")
+    private List<ExtendedWebElement> removeItemButtons;
+
+    @FindBy(xpath = "//*[contains(@content-desc,'checkout')]")
     private ExtendedWebElement proceedToCheckoutButton;
 
     @FindBy(xpath = "//*[contains(@resource-id,'items')]")
@@ -39,6 +44,12 @@ public class CartScreen extends CartScreenBase {
 
     @FindBy(xpath = "//*[contains(@resource-id,'totalPrice')]")
     private ExtendedWebElement totalAmountLabel;
+
+    @FindBy(xpath = "//*[contains(@resource-id,'noItemTitle')]")
+    private ExtendedWebElement noItemsLabel;
+
+    @FindBy(xpath = "//*[contains(@resource-id,'shopping')]")
+    private ExtendedWebElement goShoppingButton;
 
     public CartScreen(WebDriver driver) {
         super(driver);
@@ -65,7 +76,56 @@ public class CartScreen extends CartScreenBase {
     }
 
     @Override
+    public CartScreenBase increaseProductQuantity(String productName, int count) {
+        int productIndex = getProductIndexByName(productName);
+        for (int i = 0; i < count; i++) {
+            plusQuantityButtons.get(productIndex).click();
+        }
+        return initPage(CartScreenBase.class);
+    }
+
+    @Override
+    public CartScreenBase decreaseProductQuantity(String productName, int count) {
+        int productIndex = getProductIndexByName(productName);
+        for (int i = 0; i < count; i++) {
+            minusQuantityButtons.get(productIndex).click();
+        }
+        return initPage(CartScreenBase.class);
+    }
+
+    @Override
+    public CartScreenBase removeProduct(String productName) {
+        removeItemButtons.get(getProductIndexByName(productName)).click();
+        return initPage(CartScreenBase.class);
+    }
+
+    @Override
+    public boolean isCartEmpty() {
+        return noItemsLabel.isElementPresent();
+    }
+
+    @Override
+    public CatalogScreenBase clickGoShoppingButton() {
+        goShoppingButton.click();
+        return initPage(CatalogScreenBase.class);
+    }
+
+    @Override
     public boolean isOpened() {
         return proceedToCheckoutButton.isElementPresent();
+    }
+
+    @Override
+    public NavigationMenuBase getNavigation() {
+        return initPage(NavigationMenuBase.class);
+    }
+
+    private int getProductIndexByName(String productName) {
+        for (int i = 0; i < productNameLabels.size(); i++) {
+            if (productNameLabels.get(i).getText().equals(productName)) {
+                return i;
+            }
+        }
+        throw new RuntimeException("Product " + productName + " not found");
     }
 }

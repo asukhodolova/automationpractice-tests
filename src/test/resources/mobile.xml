@@ -9,11 +9,16 @@
         </classes>
     </test>
 
-    <test name="Actions with cart test">
+    <test name="Add to cart test">
+        <classes>
+            <class name="com.solvd.mydemoapp.tests.smoke.AddToCartTest"/>
+        </classes>
+    </test>
+
+    <test name="Actions cart test">
         <classes>
             <class name="com.solvd.mydemoapp.tests.smoke.ActionsWithCartTest"/>
         </classes>
     </test>
-
 
 </suite>

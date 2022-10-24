@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
-public abstract class CatalogScreenBase extends AbstractPage implements ICommonScreen, INavigationMenu {
+public abstract class CatalogScreenBase extends AbstractPage implements ICommonScreen {
 
     public CatalogScreenBase(WebDriver driver) {
         super(driver);

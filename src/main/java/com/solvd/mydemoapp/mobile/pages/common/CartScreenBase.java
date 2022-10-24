@@ -18,4 +18,14 @@ public abstract class CartScreenBase extends AbstractPage implements ICommonScre
     public abstract void clickProceedToCheckoutButton();
 
     public abstract List<String> getAddedProductNames();
+
+    public abstract CartScreenBase increaseProductQuantity(String productName, int count);
+
+    public abstract CartScreenBase decreaseProductQuantity(String productName, int count);
+
+    public abstract CartScreenBase removeProduct(String productName);
+
+    public abstract boolean isCartEmpty();
+
+    public abstract CatalogScreenBase clickGoShoppingButton();
 }

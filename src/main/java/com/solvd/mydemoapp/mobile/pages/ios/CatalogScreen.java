@@ -4,8 +4,8 @@ import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import com.solvd.mydemoapp.mobile.dto.Product;
-import com.solvd.mydemoapp.mobile.pages.common.CartScreenBase;
 import com.solvd.mydemoapp.mobile.pages.common.CatalogScreenBase;
+import com.solvd.mydemoapp.mobile.pages.common.NavigationMenuBase;
 import com.solvd.mydemoapp.mobile.pages.common.ProductDetailsScreenBase;
 import com.solvd.mydemoapp.mobile.pages.common.SortingScreenBase;
 import org.openqa.selenium.WebDriver;
@@ -36,12 +36,6 @@ public class CatalogScreen extends CatalogScreenBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name CONTAINS 'Star'`]")
     private List<ExtendedWebElement> productStarButtons;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Cart-tab-item'`]")
-    private ExtendedWebElement cartButton;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[-1]/XCUIElementTypeStaticText")
-    private ExtendedWebElement cartAmountLabel;
-
     public CatalogScreen(WebDriver driver) {
         super(driver);
     }
@@ -49,7 +43,7 @@ public class CatalogScreen extends CatalogScreenBase {
     @Override
     public SortingScreenBase openSortingPage() {
         sortingButton.click();
-        return initPage(getDriver(), SortingScreenBase.class);
+        return initPage(SortingScreenBase.class);
     }
 
     @Override
@@ -79,7 +73,7 @@ public class CatalogScreen extends CatalogScreenBase {
         Optional<ExtendedWebElement> product = productNameLabels.stream().filter(p -> p.getText().equals(productName)).findFirst();
         if (product.isPresent()) {
             product.get().click();
-            return initPage(getDriver(), ProductDetailsScreenBase.class);
+            return initPage(ProductDetailsScreenBase.class);
         }
         throw new RuntimeException("Product " + productName + " not found");
     }
@@ -108,13 +102,7 @@ public class CatalogScreen extends CatalogScreenBase {
     }
 
     @Override
-    public CartScreenBase openCart() {
-        cartButton.click();
-        return initPage(getDriver(), CartScreenBase.class);
-    }
-
-    @Override
-    public int getProductsAmountInCart() {
-        return Integer.valueOf(cartAmountLabel.getAttribute("name"));
+    public NavigationMenuBase getNavigation() {
+        return initPage(NavigationMenuBase.class);
     }
 }
