@@ -1,7 +1,6 @@
 package com.solvd.mydemoapp.tests.smoke;
 
 import com.qaprosoft.carina.core.foundation.IAbstractTest;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
 import com.qaprosoft.carina.core.foundation.utils.ownership.MethodOwner;
 import com.qaprosoft.carina.core.foundation.utils.tag.Priority;
 import com.qaprosoft.carina.core.foundation.utils.tag.TestPriority;
@@ -17,7 +16,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.Arrays;
 import java.util.List;
 
-public class AddToCartTest implements IAbstractTest, IMobileUtils {
+public class AddToCartTest implements IAbstractTest {
 
     private Product firstProduct;
     private Product secondProduct;

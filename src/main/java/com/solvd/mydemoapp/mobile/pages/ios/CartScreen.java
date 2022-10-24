@@ -126,7 +126,7 @@ public class CartScreen extends CartScreenBase {
 
     @Override
     public boolean isOpened() {
-        return title.isElementPresent();
+        return title.isElementPresent() || noItemsLabel.isElementPresent();
     }
 
     @Override
