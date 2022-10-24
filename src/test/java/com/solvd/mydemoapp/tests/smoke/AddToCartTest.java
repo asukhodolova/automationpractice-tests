@@ -24,7 +24,7 @@ public class AddToCartTest implements IAbstractTest {
     @Test(description = "Add products to cart and verify cart counter")
     @MethodOwner(owner = "asukhodolova")
     @TestPriority(Priority.P0)
-    @TestLabel(name = "feature", value = {"mobile", "images", "android", "smoke"})
+    @TestLabel(name = "feature", value = {"mobile", "ios", "android", "smoke"})
     public void testAddToCartAndVerifyCounter() {
         CatalogScreenBase catalogScreenBase = initPage(getDriver(), CatalogScreenBase.class);
         Assert.assertTrue(catalogScreenBase.isOpened(), "Catalog page is not opened");
@@ -48,7 +48,7 @@ public class AddToCartTest implements IAbstractTest {
     @Test(description = "Verify cart with product details, total price and quantity", dependsOnMethods = "testAddToCartAndVerifyCounter")
     @MethodOwner(owner = "asukhodolova")
     @TestPriority(Priority.P0)
-    @TestLabel(name = "feature", value = {"mobile", "images", "android", "smoke"})
+    @TestLabel(name = "feature", value = {"mobile", "ios", "android", "smoke"})
     public void testVerifyCartDetails() {
         CartScreenBase cartScreenBase = initPage(getDriver(), ProductDetailsScreenBase.class).getNavigation().openCart();
         Assert.assertTrue(cartScreenBase.isOpened(), "Cart page is not opened");

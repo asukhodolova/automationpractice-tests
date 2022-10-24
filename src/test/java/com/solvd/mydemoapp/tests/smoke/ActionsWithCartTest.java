@@ -26,7 +26,7 @@ public class ActionsWithCartTest implements IAbstractTest {
     @Test(description = "Add product to cart and verify cart details")
     @MethodOwner(owner = "asukhodolova")
     @TestPriority(Priority.P0)
-    @TestLabel(name = "feature", value = {"mobile", "images", "android", "smoke"})
+    @TestLabel(name = "feature", value = {"mobile", "ios", "android", "smoke"})
     public void testAddToCartAndVerifyCartDetails() {
         CatalogScreenBase catalogScreenBase = initPage(getDriver(), CatalogScreenBase.class);
         Assert.assertTrue(catalogScreenBase.isOpened(), "Catalog page is not opened");
@@ -45,7 +45,7 @@ public class ActionsWithCartTest implements IAbstractTest {
     @Test(alwaysRun = true, description = "Increase quantity of product and verify updated cart details", dependsOnMethods = "testAddToCartAndVerifyCartDetails")
     @MethodOwner(owner = "asukhodolova")
     @TestPriority(Priority.P0)
-    @TestLabel(name = "feature", value = {"mobile", "images", "android", "smoke"})
+    @TestLabel(name = "feature", value = {"mobile", "ios", "android", "smoke"})
     public void testIncreaseProductQuantityAndVerifyUpdatedCartDetails() {
         openCartIfNecessary();
 
@@ -58,7 +58,7 @@ public class ActionsWithCartTest implements IAbstractTest {
     @Test(alwaysRun = true, description = "Decrease quantity of product and verify updated cart details", dependsOnMethods = "testIncreaseProductQuantityAndVerifyUpdatedCartDetails")
     @MethodOwner(owner = "asukhodolova")
     @TestPriority(Priority.P0)
-    @TestLabel(name = "feature", value = {"mobile", "images", "android", "smoke"})
+    @TestLabel(name = "feature", value = {"mobile", "ios", "android", "smoke"})
     public void testDecreaseProductQuantityAndVerifyUpdatedCartDetails() {
         openCartIfNecessary();
 
@@ -71,7 +71,7 @@ public class ActionsWithCartTest implements IAbstractTest {
     @Test(alwaysRun = true, description = "Remove items and verify empty cart", dependsOnMethods = "testDecreaseProductQuantityAndVerifyUpdatedCartDetails")
     @MethodOwner(owner = "asukhodolova")
     @TestPriority(Priority.P0)
-    @TestLabel(name = "feature", value = {"mobile", "images", "android", "smoke"})
+    @TestLabel(name = "feature", value = {"mobile", "ios", "android", "smoke"})
     public void testRemoveItemsAndVerifyEmptyCart() {
         openCartIfNecessary();
 
