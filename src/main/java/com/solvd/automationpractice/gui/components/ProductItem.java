@@ -55,12 +55,14 @@ public class ProductItem extends AbstractUIObject {
     }
 
     public ShoppingCartWindow addToCart() {
+        productItem.scrollTo();
         productItem.hover();
         addToCartButton.click();
         return new ShoppingCartWindow(driver);
     }
 
     public Product fetchProductDetails() {
+        productItem.scrollTo();
         productItem.hover();
 
         Product product = new Product();

@@ -3,15 +3,15 @@
 
     <parameter name="suiteOwner" value="asukhodolova"/>
 
-    <test name="Search test">
-        <classes>
-            <class name="com.solvd.automationpractice.tests.smoke.SearchTest"/>
-        </classes>
-    </test>
-
     <test name="Add to cart test">
         <classes>
             <class name="com.solvd.automationpractice.tests.smoke.AddToCartTest"/>
+        </classes>
+    </test>
+
+    <test name="Search test">
+        <classes>
+            <class name="com.solvd.automationpractice.tests.smoke.SearchTest"/>
         </classes>
     </test>
 

@@ -38,6 +38,7 @@ public class ShoppingCart extends AbstractUIObject {
 
     public ShoppingCart expandCart() {
         if (!shoppingCart.getAttribute("style").contains("display: block")) {
+            cartQuantityLabel.scrollTo();
             cartQuantityLabel.hover();
         } else {
             LOGGER.info("Cart is already expanded");
