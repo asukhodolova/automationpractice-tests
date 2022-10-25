@@ -23,7 +23,7 @@ public class ActionsWithCartTest implements IAbstractTest {
     private static final int ZERO_COUNT = 0;
     private Product product;
 
-    @Test(description = "Add product to cart and verify cart details")
+    @Test(description = "Add product to cart and verify cart details", groups = "basic")
     @MethodOwner(owner = "asukhodolova")
     @TestPriority(Priority.P0)
     @TestLabel(name = "feature", value = {"mobile", "ios", "android", "smoke"})

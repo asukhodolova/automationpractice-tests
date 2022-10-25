@@ -1,11 +1,14 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite verbose="1" name="My Demo App Mobile Test Suite">
 
-    <parameter name="suiteOwner" value="asukhodolova"/>
-
-    <test name="Sorting test">
+    <test name="Actions cart test">
+        <groups>
+            <run>
+                <include name="basic"/>
+            </run>
+        </groups>
         <classes>
-            <class name="com.solvd.mydemoapp.tests.smoke.SortingTest"/>
+            <class name="com.solvd.mydemoapp.tests.smoke.ActionsWithCartTest"/>
         </classes>
     </test>
 
